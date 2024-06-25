@@ -9,6 +9,7 @@ document.getElementById('csvFile').addEventListener('change', function(e) {
   };
   reader.readAsText(file);
 });
+
 function downloadCSV() {
   // แทนที่ URL ด้านล่างด้วยลิงก์ไปยังไฟล์ CSV ใน Google Drive
   var csvUrl = "https://drive.google.com/file/d/1abYoc4UFeS8LNKThebp9kI6xjNZVc7xM/view?usp=sharing";
@@ -48,16 +49,16 @@ function exportCSV() {
   var csv = [];
   var rows = table.rows;
 
-  for (var i = 0; i < rows.length; i++) {
-      var row = [];
-      var cells = rows[i].cells;
+  for (var i = 0; i < rows.length; i++) { //rows.length คือจำนวนแถวในตาราง resultsTable.
+      var row = []; //row เป็นอาร์เรย์ที่ใช้เพื่อเก็บข้อมูลแต่ละเซลล์ในแถวปัจจุบันของตาราง.
+      var cells = rows[i].cells; //cells เป็นคอลเล็กชันของเซลล์ในแถวปัจจุบัน (rows[i]). 
 
-      for (var j = 0; j < cells.length; j++) {
-          var cellText = cells[j].innerText.replace(/"/g, '""'); // ป้องกันการแก้ไขข้อมูลที่มีค่าว่าง
-          row.push('"' + cellText + '"');
+      for (var j = 0; j < cells.length; j++) { //วนลูปผ่านเซลล์ในแต่ละแถว (cells):
+          var cellText = cells[j].innerText.replace(/"/g, '""'); // cells[j].innerText คือข้อความที่อยู่ในเซลล์ที่ j ในแถวปัจจุบัน. replace(/"/g, '""') ใช้เพื่อแทนที่เครื่องหมาย " ด้วย "" เพื่อป้องกันการขัดแย้งกับตัวครอบข้อมูลใน CSV.
+          row.push('"' + cellText + '"');//เพิ่มข้อความที่ผ่านการป้องกันแล้วเข้าไปในอาร์เรย์ row โดยใส่เครื่องหมายคำพูดครอบข้อมูล.
       }
 
-      csv.push(row.join(','));
+      csv.push(row.join(','));//row.join(',') จะเชื่อมข้อมูลในอาร์เรย์ row เข้าด้วยกันโดยใช้เครื่องหมาย , เป็นตัวคั่น และเพิ่มแถว CSV ที่เกิดจากการเชื่อมข้อมูลนั้นลงในอาร์เรย์ csv.
   }
 
   var csvContent = csv.join('\n');
@@ -149,12 +150,14 @@ function searchICSCode() {
           var cell4 = row.insertCell(3);
           var cell5 = row.insertCell(4);
           var cell6 = row.insertCell(5);
+          var cell7 = row.insertCell(6);
           cell1.textContent = window.csvData[index]['Program Name'];
           cell2.textContent = window.csvData[index]['Feeder Type'];
           cell3.textContent = window.csvData[index]['Machine No.'];
           cell4.textContent = window.csvData[index]['Line No.'];
           cell5.textContent = window.csvData[index]['ICS Code'];
           cell6.textContent = window.csvData[index]['Part Name'];
+          cell7.textContent = window.csvData[index]['Position'];
       });
 
   } else {
@@ -221,12 +224,14 @@ function inserttable() {
       var cell4 = newRow.insertCell(3);
       var cell5 = newRow.insertCell(4);
       var cell6 = newRow.insertCell(5);
+      var cell7 = row.insertCell(6);
       cell1.textContent = window.csvData[index]['Program Name'];
       cell2.textContent = window.csvData[index]['Feeder Type'];
       cell3.textContent = window.csvData[index]['Machine No.'];
       cell4.textContent = window.csvData[index]['Line No.'];
       cell5.textContent = window.csvData[index]['ICS Code'];
       cell6.textContent = window.csvData[index]['Part Name'];
+      cell7.textContent = window.csvData[index]['Position'];
       
       var icsCode = window.csvData[index]['ICS Code'];
       if (!resultsList.querySelector('option[value="' + icsCode + '"]')) {
