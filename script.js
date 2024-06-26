@@ -9,6 +9,30 @@ document.getElementById('csvFile').addEventListener('change', function(e) {
   };
   reader.readAsText(file);
 });
+function fetchCSV() {
+  var csvUrl = 'https://raw.githubusercontent.com/asianstanley/TEST123/TEST123/GetDataFromXML.csv';
+  fetch(csvUrl)
+    .then(response => response.text())
+    .then(data => processData(data))
+    .catch(error => console.error('Error fetching the CSV file:', error));
+}
+function toggleMenu() {
+  var menuPopup = document.getElementById('menuPopup');
+  var menuOverlay = document.getElementById('menuOverlay');
+  if (menuPopup.style.right === '0px') {
+    menuPopup.style.right = '-300px';
+    menuOverlay.style.display = 'none';
+  } else {
+    menuPopup.style.right = '0';
+    menuOverlay.style.display = 'block';
+  }
+}
+
+// Function to close the menu popup
+function closeMenu() {
+  document.getElementById('menuPopup').style.right = '-300px';
+  document.getElementById('menuOverlay').style.display = 'none';
+}
 
 function downloadCSV() {
   // แทนที่ URL ด้านล่างด้วยลิงก์ไปยังไฟล์ CSV ใน Google Drive
@@ -37,7 +61,7 @@ function processData(csvData) {
   window.csvHeaders = headers;
   console.log(window.csvData);  // Debugging: print the data to the console
 }
-
+window.onload = fetchCSV;
 function exportCSV() {
   var table = document.getElementById('resultsTable');
 
