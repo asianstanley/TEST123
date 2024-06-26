@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     /* Custom CSS for header */
-    .search-header {
+    .navbar-custom {
       background-color: orange;
+      width: 100%;
       padding: 10px 0;
-      text-align: center;
-      color: white;
-      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
+    
     /* Custom CSS for form groups */
     .form-group {
       margin-bottom: 20px;
@@ -29,24 +29,75 @@
       background-color: lightcyan; /* สีพื้นหลังสำหรับแถวที่เลขคี่ */
     }
 
-
     .btn-purple {
       color: #fff;
       background-color: purple;
       border-color: purple;
-  }
-  .btn-purple:hover {
+    }
+    .btn-purple:hover {
       background-color: darkpurple;
       border-color: darkpurple;
-  }
+    }
+    .menu-popup {
+      display: block;
+      position: fixed;
+      top: 0;
+      right: -300px; /* Start off-screen */
+      width: 300px;
+      height: 100%;
+      background-color:#F7D07A;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+      z-index: 1000;
+      padding: 20px;
+      transition: right 0.3s ease; /* Slide-in transition */
+    }
+    .menu-popup a {
+      display: block;
+      margin: 15px 0;
+    }
+    .menu-popup .close-btn {
+      cursor: pointer;
+      font-size: 1.5em;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .menu-popup a, .menu-popup .close-btn {
+      color: black; /* เปลี่ยนสีตัวหนังสือเป็นสีดำ */
+    }
   
   </style>
 </head>
 <body class="bg-light">
-
-<div class="search-header">
-  <h1>SEARCH ENGINE</h1>
-</div>
+  <nav class="navbar navbar-light navbar-custom">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">SEARCH ENGINE</span>
+      <button class="navbar-toggler" type="button" onclick="toggleMenu()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="menu-popup" id="menuPopup">
+    <span class="close-btn" onclick="toggleMenu()">&times;</span>
+    <a href="#">Home</a>
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <a href="#">About</a>
+  </div>
+  <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+  
+ 
 
 <div class="container mt-3">
   <div class="row">
